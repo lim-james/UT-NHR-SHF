@@ -16,7 +16,7 @@ const DISHES = [
 	},
 	{
 		key: 'nasi_ulam',
-		ingredients: ['rice', 'lemongrass', 'shallots', 'mint_leaves', 'dried_shrimp'],
+		ingredients: ['rice', 'lemongrass', 'shallots', 'mint_leaves', 'dried_shrimps'],
 		wrongDishes: ['mango', 'cookies', 'milk']
 	},
 	{
