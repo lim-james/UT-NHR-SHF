@@ -11,7 +11,7 @@ const initializeObject = async object => {
 	object.container = await Scene.root.findFirst(object.key);
 	object.sceneObject = await Scene.root.findFirst(object.key + '_appear');
     object.sceneObject.hidden = true;
-    object.startAudio = await Audio.getAudioPlaybackController(object.key + '_start');
+    // object.startAudio = await Audio.getAudioPlaybackController(object.key + '_start');
 	return object;
 };
 
