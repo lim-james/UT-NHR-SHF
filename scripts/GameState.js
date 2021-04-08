@@ -35,45 +35,45 @@ const onMouthClose = (game, object) => {
 
 const GameState = {
     enter: async (fsm, game, objects) => {
-			game.et = game.duration;
-			
-			const currKey = game.currentDish().key;
+		game.et = game.duration;
+		
+		const currKey = game.currentDish().key;
 
 	    game.dishes.forEach(dish => {
-				dish.container.hidden = dish.key != currKey;
-				dish.sceneObject.hidden = true;
-			});
-		
-			game.collected = [];
+			dish.container.hidden = dish.key != currKey;
+			dish.sceneObject.hidden = true;
+		});
+	
+		game.collected = [];
 
-			let ingredients = [];
-			let randoms = [];
+		let ingredients = [];
+		let randoms = [];
 
-			objects.forEach(
-				element => (game.isInGame(element) ? ingredients : randoms).push(element)
-			);
+		objects.forEach(
+			element => (game.isInGame(element) ? ingredients : randoms).push(element)
+		);
 
 	    ingredients = ingredients.map(object => {
 		    object.physics.isKinematic = true;
 		    return object;
-			});
+		});
 
-			const enabledPhysics = ingredients.concat(randoms);
-			
-			GameState.right = {
-				delay: 0,
-				sceneObject: await Scene.root.findFirst('chomp_right'),
-			};
+		const enabledPhysics = ingredients.concat(randoms);
+		
+		GameState.right = {
+			delay: 0,
+			sceneObject: await Scene.root.findFirst('chomp_right'),
+		};
 
-			GameState.wrong = {
-				delay: 0,
-				sceneObject: await Scene.root.findFirst('chomp_wrong'),
-			};
+		GameState.wrong = {
+			delay: 0,
+			sceneObject: await Scene.root.findFirst('chomp_wrong'),
+		};
 
-			await Patches.inputs.setBoolean('isPlaying', true);
+		await Patches.inputs.setBoolean('isPlaying', true);
 
-			// game.currentDish().startAudio.reset();
-			// game.currentDish().startAudio.setPlaying(true);
+// game.currentDish().startAudio.reset();
+		// game.currentDish().startAudio.setPlaying(true);kk
 
 	    return enabledPhysics.map(game.randomisePosition);
     },

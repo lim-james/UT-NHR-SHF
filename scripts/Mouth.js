@@ -4,7 +4,6 @@ const Diagnostics = require('Diagnostics');
 
 import Screen from './Screen';
 import Physics from './Physics';
-import DiagnosticsModule from 'Diagnostics';
 
 // Face tracking members
 

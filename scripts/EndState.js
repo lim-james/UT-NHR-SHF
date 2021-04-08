@@ -5,7 +5,7 @@ const Scene = require('Scene');
 const TouchGestures = require('TouchGestures');
 
 import { Bounds } from './Common';
-import Math from './Math';
+import MyMath from './MyMath';
 import GameState from './GameState';
 
 const EndState = {
@@ -87,8 +87,8 @@ const EndState = {
 		if (game.et < 2) {
 			const t = game.et / 2;
 			processed = ingredients.map((value, index) => {
-		    	value.position.x = Math.lerp(value.position.x, 0, t);
-		    	value.position.y = Math.lerp(value.position.y, getY(index), t);
+		    	value.position.x = MyMath.lerp(value.position.x, 0, t);
+		    	value.position.y = MyMath.lerp(value.position.y, getY(index), t);
 		    	return value;
 			});
 		} else if (game.et > 3) {
@@ -111,13 +111,13 @@ const EndState = {
 			// );
 
 			others = others.map((value, index) => {
-				const t = Math.clamp((et - index * 0.5) / 3, 0, 1);
+				const t = MyMath.clamp((et - index * 0.5) / 3, 0, 1);
 				if (t >= 0.25) value.stamp.hidden = false;
 		    	return value;
 			});
 
 			collected = collected.map((value, index) => {
-				const t = Math.clamp((et - index * 0.5) / 3, 0, 1);
+				const t = MyMath.clamp((et - index * 0.5) / 3, 0, 1);
 				if (t >= 0.25 && index > EndState.blastIndex) {
 					EndState.blastDelay = 0.4;
 					EndState.blastObject.hidden = false;
@@ -126,7 +126,7 @@ const EndState = {
 					game.audio.final.reset();
 					game.audio.final.setPlaying(true);
 				}
-				value.position.y = Math.lerp(value.position.y, EndState.clockY, t);
+				value.position.y = MyMath.lerp(value.position.y, EndState.clockY, t);
 		    	return value;
 			});
 

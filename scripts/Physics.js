@@ -1,5 +1,5 @@
 const Physics = {
-	G: 0.01,
+	G: 0.006,
 
 	applyGravity : object => {
 		object.position.y -= Physics.G;
