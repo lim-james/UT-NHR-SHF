@@ -11,7 +11,7 @@ import InitState from './InitState';
 const DISHES = [
 	{
 		key: 'tong_sui',
-		ingredients: ['snow_fungus', 'rock_sugar', 'dried_red_dates', 'goji_berries', 'dried_black_dates'],
+		ingredients: ['snow_fungus', 'rock_sugar', 'dried_red_dates', 'goji_berries', 'longan'],
 		wrongDishes: ['sweet_potato', 'snowman', 'chocolate']
 	},
 	{

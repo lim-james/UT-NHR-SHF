@@ -44,7 +44,7 @@ addDish('snow_fungus');
 addDish('rock_sugar');
 addDish('dried_red_dates');
 addDish('goji_berries');
-addDish('dried_black_dates');
+addDish('longan');
 // nasi_ulam
 addDish('rice');
 addDish('lemongrass'); 
