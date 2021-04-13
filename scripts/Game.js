@@ -47,13 +47,6 @@ const Game = {
 	isIngredient: item => Game.currentDish().ingredients.includes(item.key),
 	isInGame: item => Game.currentDish().ingredients.includes(item.key) || Game.currentDish().wrongDishes.includes(item.key),
 
-	randomisePosition: object => {
-		if (Game.isIngredient(object))
-			return randomisePosition(object, 2, 1);
-		else
-			return randomisePosition(object, 5, 2);
-	},
-
 	collected: [],
 };
 

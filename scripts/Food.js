@@ -8,18 +8,27 @@ import { Bounds, Rand } from './Common';
 
 const isOutOfScreen = object => object.position.y < Bounds.min.y;
 
-const randomisePosition = (object, multiplier = 6, offset = 1) => {
+const randomisePosition = (object, offset = 1) => {
 	object.position = {
-		x: Rand.srange(Bounds.min.x, Bounds.max.x, 2),
-		y: Bounds.max.y * (Rand.irange(0, multiplier) + offset),
+		x: Rand.range(Bounds.min.x, Bounds.max.x),
+		y: Bounds.max.y + offset * 0.1,
 	};
 	return object;
 };
 
+const stackObject = (object, stack) => {
+	object.position = {
+		x: Rand.range(Bounds.min.x, Bounds.max.x),
+		y: stack.position.y + 0.1
+	};
+
+	return object;
+}
+
 const initializeObject = async (object, index) => {
 	object.sceneObject = await Scene.root.findFirst(object.key);
 	object.stamp = await object.sceneObject.findFirst('missed');
-	return randomisePosition(object, 1, index * 0.5 + 1);
+	return randomisePosition(object, index);
 };
 
 // Food members
@@ -74,10 +83,10 @@ const Food = {
 	update: (game, objects) => {
 		const inBounds = objects.filter(obj => !isOutOfScreen(obj));
 		const outside = objects.filter(isOutOfScreen);
-		const resetted = outside.map(game.randomisePosition);
+		const resetted = outside.map(randomisePosition);
 		return inBounds.concat(resetted);
 	},
 };
 
 export default Food;
-export { randomisePosition }
+export { randomisePosition, stackObject }

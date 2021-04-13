@@ -3,10 +3,12 @@ const Patches = require('Patches');
 const Reactive = require('Reactive');
 const Scene = require('Scene');
 const TouchGestures = require('TouchGestures');
+const Diagnostics = require('Diagnostics');
 
 import { Bounds } from './Common';
 import MyMath from './MyMath';
 import GameState from './GameState';
+import { randomisePosition } from './Food';
 
 const EndState = {
 	clockY: -0.15,
@@ -30,7 +32,7 @@ const EndState = {
 
 		randoms = randoms.map(i => {
 			i.physics.isKinematic = false;
-			return game.randomisePosition(i);
+			return randomisePosition(i);
 		});
 		
 		game.et = 0;

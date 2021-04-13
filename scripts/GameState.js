@@ -2,7 +2,7 @@ const Patches = require('Patches');
 const Scene = require('Scene');
 const Diagnostics = require('Diagnostics');
 
-import Food from './Food';
+import Food, { randomisePosition, stackObject } from './Food';
 import Mouth from './Mouth';
 
 import EndState from './EndState';
@@ -30,7 +30,9 @@ const onMouthClose = (game, object) => {
 	audio.reset();
 	audio.setPlaying(true);
 
-	return game.randomisePosition(object);
+	const result = stackObject(object, GameState.last);
+	GameState.last = object;
+	return result;
 };
 
 const GameState = {
@@ -38,8 +40,7 @@ const GameState = {
 		game.et = game.duration;
 		
 		const currKey = game.currentDish().key;
-
-	    game.dishes.forEach(dish => {
+		game.dishes.forEach(dish => {
 			dish.container.hidden = dish.key != currKey;
 			dish.sceneObject.hidden = true;
 		});
@@ -53,10 +54,13 @@ const GameState = {
 			element => (game.isInGame(element) ? ingredients : randoms).push(element)
 		);
 
-	    ingredients = ingredients.map(object => {
-		    object.physics.isKinematic = true;
-		    return object;
+		ingredients = ingredients.sort(() => Math.random() - 0.5);
+		ingredients = ingredients.map((object, index) => {
+			object.physics.isKinematic = true;
+			return randomisePosition(object, index);
 		});
+
+		GameState.last = ingredients[ingredients.length - 1];
 
 		const enabledPhysics = ingredients.concat(randoms);
 		
@@ -73,9 +77,11 @@ const GameState = {
 		await Patches.inputs.setBoolean('isPlaying', true);
 
 // game.currentDish().startAudio.reset();
-		// game.currentDish().startAudio.setPlaying(true);kk
+		// game.currentDish().startAudio.setPlaying(true);
 
-	    return enabledPhysics.map(game.randomisePosition);
+	    return enabledPhysics;//.map((object, index) => {
+			// 	randomisePosition(object, index);
+			// });
     },
 
     update: async (fsm, game, objects, dt) => {
@@ -118,9 +124,9 @@ const GameState = {
 		}
 
 		return processed;
-    },
+	},
 
-    exit: async (fsm, game, objects) => {
+	exit: async (fsm, game, objects) => {
 		await Patches.inputs.setBoolean('isPlaying', false);
 
 		game.audio.bg.setPlaying(false);
